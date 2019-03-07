@@ -2,6 +2,7 @@ import Pcg  as p
 from scipy import io
 from scipy.sparse import coo_matrix
 import time as tm
+import plotLog as pLog
 
 def main():
 
@@ -27,18 +28,29 @@ def main():
     exit(0)
   neq = nlb
 
-  print('numero de equacoes = {0}'.format(neq))
+  print('numero de equacoes = {0}\n'.format(neq))
   aDense= coo_matrix(aCoo,shape=(neq,neq)).todense()
 
+# ... sem precondicionador
   time1 = tm.time()
-  x  = p.pcgNumpy(aDense,b,preC=0)
+  x  = p.pcgNumpy(aDense,b,preC=0,nameLog='CG.txt')
   time1 = tm.time() - time1
+# ......................................................................
 
+# ... com precondicionador diagonal
   time2 = tm.time()
-  x  = p.pcgNumpy(aDense,b)
+  x  = p.pcgNumpy(aDense,b,preC=1,nameLog='PCG.txt')
   time2 = tm.time() - time2
+# ......................................................................
 
   print('Tempo python puro = {0}\nTempo numpy       = {1}'.format(time1,time2))
+
+# ... plota a convergencia
+  pLog.initPlot(iCod=0)
+  pLog.plot('CG.txt' )
+  pLog.plot('PCG.txt')
+  pLog.show()
+# ......................................................................
   
 if __name__ == '__main__':
 
