@@ -1,4 +1,5 @@
-import Pcg  as p
+from Pcg import pcg
+from Pcg_numpy import pcgNumpy
 from scipy import io
 from scipy.sparse import coo_matrix
 import time as tm
@@ -36,15 +37,15 @@ def main():
 # ... sem precondicionador
   print('Sem precondicionador')
   time1 = tm.time()
-  x  = p.pcgNumpy(aDense,b,preC=0,nameLog='CG.txt')
-#  x  = p.pcg(aDense,b,preC=0,nameLog='CG.txt')
+  x  = pcgNumpy(aDense,b,preC=0,nameLog='CG.txt')
+#  x  = pcg(aDense,b,preC=0,nameLog='CG.txt')
   time1 = tm.time() - time1
 # ......................................................................
 
 # ... com precondicionador diagonal
   print('Precondicionador diagonal')
   time2 = tm.time()
-  x  = p.pcgNumpy(aDense,b,preC=1,nameLog='PCG.txt')
+  x  = pcgNumpy(aDense,b,preC=1,nameLog='PCG.txt')
 #  x  = p.pcg(aDense,b,preC=1,nameLog='PCG.txt')
   time2 = tm.time() - time2
 # ......................................................................
