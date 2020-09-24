@@ -7,7 +7,7 @@ import plotLog as pLog
 def main():
 
 # ... leitura do arquivo da matrix
-  filein = 'retangulo_mec.mtx'
+  filein = 'cilindro1_1_1.mtx'
   aCoo  = io.mmread(filein)
   nla    = int(io.mminfo(filein)[0])
   nca    = int(io.mminfo(filein)[1])
@@ -18,7 +18,7 @@ def main():
   neq = nla
 
 # ... leitura do arquivo do vetor de forcas
-  filein = 'retangulo_mec_b.mtx'
+  filein = 'cilindro1_1_1_b.mtx'
   b      = io.mmread(filein)
   nlb    = int(io.mminfo(filein)[0])
   b      = b.reshape((nlb,))
