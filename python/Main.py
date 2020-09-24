@@ -7,7 +7,7 @@ import plotLog as pLog
 def main():
 
 # ... leitura do arquivo da matrix
-  filein = 'cilindro1_1_1.mtx'
+  filein = '../data/cilindro1_1_1.mtx'
   aCoo  = io.mmread(filein)
   nla    = int(io.mminfo(filein)[0])
   nca    = int(io.mminfo(filein)[1])
@@ -18,28 +18,34 @@ def main():
   neq = nla
 
 # ... leitura do arquivo do vetor de forcas
-  filein = 'cilindro1_1_1_b.mtx'
+  filein = '../data/cilindro1_1_1_b.mtx'
   b      = io.mmread(filein)
   nlb    = int(io.mminfo(filein)[0])
   b      = b.reshape((nlb,))
   if nlb != neq:
     print('Numero de linhas no vertor de forcas incompativel')
-    print('Numero de linhas = {0}\n'.format(nl))
+    print('Numero de linhas = {0}\n'.format(nlb))
     exit(0)
   neq = nlb
 
-  print('numero de equacoes = {0}\n'.format(neq))
+  print('**************************')
+  print('numero de equacoes = {0}'.format(neq))
+  print('**************************')
   aDense= coo_matrix(aCoo,shape=(neq,neq)).todense()
 
 # ... sem precondicionador
+  print('Sem precondicionador')
   time1 = tm.time()
   x  = p.pcgNumpy(aDense,b,preC=0,nameLog='CG.txt')
+#  x  = p.pcg(aDense,b,preC=0,nameLog='CG.txt')
   time1 = tm.time() - time1
 # ......................................................................
 
 # ... com precondicionador diagonal
+  print('Precondicionador diagonal')
   time2 = tm.time()
   x  = p.pcgNumpy(aDense,b,preC=1,nameLog='PCG.txt')
+#  x  = p.pcg(aDense,b,preC=1,nameLog='PCG.txt')
   time2 = tm.time() - time2
 # ......................................................................
 

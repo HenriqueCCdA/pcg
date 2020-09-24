@@ -41,7 +41,7 @@ def show():
 **********************************************************************
   """
   plt.xlim(0)
-  plt.ylim(1.e-14,1.0)
+  plt.ylim(1.e-16,10.0)
   plt.legend(bbox_to_anchor=(0.75, 0.95), loc=2, borderaxespad=0.
             ,prop={'size':8})
   plt.xlabel(r'${r/r_0}$')
