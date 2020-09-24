@@ -32,8 +32,7 @@ def main():
   print('**************************')
   print('numero de equacoes = {0}'.format(neq))
   print('**************************')
-  aDense= coo_matrix(aCoo,shape=(neq,neq)).todense()
-
+  aDense= coo_matrix(aCoo,shape=(neq,neq)).toarray()
 # ... sem precondicionador
   print('Sem precondicionador')
   time1 = tm.time()
