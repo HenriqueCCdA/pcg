@@ -8,7 +8,9 @@ import plotLog as pLog
 def main():
 
 # ... leitura do arquivo da matrix
-  filein = '../data/cilindro1_1_1.mtx'
+# filein = '../data/sist3.mtx'
+  filein = '../data/retangulo_dif_4.mtx'
+
   aCoo  = io.mmread(filein)
   nla    = int(io.mminfo(filein)[0])
   nca    = int(io.mminfo(filein)[1])
@@ -19,7 +21,9 @@ def main():
   neq = nla
 
 # ... leitura do arquivo do vetor de forcas
-  filein = '../data/cilindro1_1_1_b.mtx'
+# filein = '../data/sist3_b.mtx'
+  filein = '../data/retangulo_dif_4_b.mtx'
+
   b      = io.mmread(filein)
   nlb    = int(io.mminfo(filein)[0])
   b      = b.reshape((nlb,))
@@ -36,7 +40,7 @@ def main():
 # ... sem precondicionador
   print('Sem precondicionador')
   time1 = tm.time()
-  x  = pcgNumpy(aDense,b,preC=0,nameLog='CG.txt')
+  x  = pcgNumpy(aDense,b,preC=1,nameLog='CG.txt')
 #  x  = pcg(aDense,b,preC=0,nameLog='CG.txt')
   time1 = tm.time() - time1
 # ......................................................................
@@ -44,8 +48,8 @@ def main():
 # ... com precondicionador diagonal
   print('Precondicionador diagonal')
   time2 = tm.time()
-  x  = pcgNumpy(aDense,b,preC=1,nameLog='PCG.txt')
-#  x  = p.pcg(aDense,b,preC=1,nameLog='PCG.txt')
+  x  = pcgNumpy(aDense,b,preC=2,nameLog='PCG.txt')
+# x  = pcg(aDense,b,preC=1,nameLog='PCG.txt')
   time2 = tm.time() - time2
 # ......................................................................
 
