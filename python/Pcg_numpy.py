@@ -1,7 +1,7 @@
 import numpy as np
 from Precond import pre_cond_solver, pre_make, fb_dilu
 
-def pcgNumpy(a, b, x = None, tol: float = 1.e-14
+def pcgNumpy(a, b, neq: int, x = None, tol: float = 1.e-14
             , maxIt: int = 10000, preC: int = 1
             ,new: bool = True, fHist: bool = True
             , nameLog = 'log.txt'):
@@ -16,6 +16,7 @@ def pcgNumpy(a, b, x = None, tol: float = 1.e-14
     * ----------------------------------------------------------------------- *
     * a - matriz de coefientes n x n                                          *
     * b - vetor independente                                                  *
+    * neq - numero de equacoes                                               *
     * x - chute inicial                                                       *
     * tol - tolerancia do solver                                              *
     * maxIt - maximo de itracoes                                              *
@@ -37,10 +38,6 @@ def pcgNumpy(a, b, x = None, tol: float = 1.e-14
     # ... abre o arquivo de log
     if fHist :
         fileLog = open(nameLog,'w')
-    # .........................................................................
-
-    # ...
-    neq: int = len(b)
     # .........................................................................
 
     # ...
