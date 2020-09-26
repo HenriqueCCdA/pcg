@@ -40,28 +40,24 @@ def main():
 
   a, b, neq = read_mm()
 
-# ... sem precondicionador
+# ...
+  time = []
+  list_name = ('CG', 'JCG', 'DILUCG')
   print('Sem precondicionador')
-  time1 = tm.time()
-  x  = pcgNumpy(a, b, neq, preC = 1, nameLog = 'CG.txt')
-#  x  = pcg(aDense,b,preC=0,nameLog='CG.txt')
-  time1 = tm.time() - time1
+  for pre, name in zip([0, 1, 2], list_name):
+    print(name)
+    time1 = tm.time()
+    x  = pcgNumpy(a, b, neq, preC = pre, nameLog =  name +'.txt')
+    time.append(tm.time() - time1)
 # ......................................................................
 
-# ... com precondicionador diagonal
-  print('Precondicionador diagonal')
-  time2 = tm.time()
-  x  = pcgNumpy(a, b, neq, preC = 2, nameLog = 'PCG.txt')
-# x  = pcg(aDense,b,preC=1,nameLog='PCG.txt')
-  time2 = tm.time() - time2
-# ......................................................................
-
-  print('Tempo python puro = {0}\nTempo numpy       = {1}'.format(time1,time2))
+  for name, t in zip(list_name, time):
+    print(f'{name:8} = {t:.6f}')
 
 # ... plota a convergencia
   pLog.initPlot(iCod = 0)
-  pLog.plot('CG.txt' )
-  pLog.plot('PCG.txt')
+  for name in list_name:
+    pLog.plot(name+'.txt' )
   pLog.show()
 # ......................................................................
   
