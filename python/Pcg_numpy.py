@@ -128,18 +128,18 @@ def pcgNumpy(a, b, neq: int, x = None, tol: float = 1.e-14
         d = di
         #...
         if fHist:
-            fileLog.write("{0:10d},{1:.14e}\n".format(j,np.sqrt(d/d0)))
+            fileLog.write("{0:10d},{1:.14e}\n".format(j,np.sqrt(abs(d)/d0)))
         # .....................................................................
 
         # ...
-        if np.sqrt(d) < conv:
+        if np.sqrt(abs(d)) < conv:
             break
         # .....................................................................
 
         # ...
-        if jj == 500 :
+        if jj == 500:
             jj = 0
-            print(j,np.sqrt(d),conv)
+            print(j,np.sqrt(abs(d)),conv)
         jj = jj + 1
         # .....................................................................
 
@@ -151,7 +151,8 @@ def pcgNumpy(a, b, neq: int, x = None, tol: float = 1.e-14
     # .........................................................................
 
     # ...
-    stry = "(PCG) solver:\n"
+    pre_name = "CG", "JCG", "DILU(0)CG", "ILU(0)CG"
+    stry = f"({pre_name[preC]}) solver:\n"
     stry+= "Solver tol           = {0:e}\n"
     stry+= "Number of equations  = {1}\n"
     stry+= "Number of iterations = {2}\n"

@@ -8,8 +8,10 @@ import plotLog as pLog
 def read_mm():
 
   # ... leitura do arquivo da matrix
-  file_in_a = '../data/retangulo_dif_4.mtx'
-  file_in_b = '../data/retangulo_dif_4_b.mtx'
+  file_in_a = '../data/quad_cav4_c.mtx'
+  file_in_b = '../data/quad_cav4_c_b.mtx'
+#  file_in_a = '../data/sist5.mtx'
+#  file_in_b = '../data/sist5_b.mtx'
 
   aCoo  = io.mmread(file_in_a)
   nla    = int(io.mminfo(file_in_a)[0])
@@ -32,6 +34,8 @@ def read_mm():
   print('**************************')
   print('numero de equacoes = {0}'.format(neq))
   print('**************************')
+
+  # convertendo para uma matriz cheia
   aDense= coo_matrix(aCoo,shape=(neq,neq)).toarray()
 
   return aDense, b, neq
@@ -40,11 +44,10 @@ def main():
 
   a, b, neq = read_mm()
 
-# ...
+  # ...
   time = []
-  list_name = ('CG', 'JCG', 'DILUCG')
-  print('Sem precondicionador')
-  for pre, name in zip([0, 1, 2], list_name):
+  list_name = ('CG', 'JCG', 'DILUCG', 'ILUCG')
+  for pre, name in zip([0, 1, 2, 3], list_name):
     print(name)
     time1 = tm.time()
     x  = pcgNumpy(a, b, neq, preC = pre, nameLog =  name +'.txt')
