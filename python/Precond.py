@@ -185,7 +185,7 @@ def pre_cond_solver(m, a, r ,neq: int, preC: int):
     ***************************************************************************
     """
     if preC == 0:
-        y = r
+        y = r.copy()
     elif preC == 1:
         y = m*r
     elif preC == 2:

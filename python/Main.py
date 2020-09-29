@@ -8,10 +8,12 @@ import plotLog as pLog
 def read_mm():
 
   # ... leitura do arquivo da matrix
-  file_in_a = '../data/quad_cav4_c.mtx'
-  file_in_b = '../data/quad_cav4_c_b.mtx'
-#  file_in_a = '../data/sist5.mtx'
-#  file_in_b = '../data/sist5_b.mtx'
+  file_in_a = '../data/retangulo_dif_4.mtx'
+  file_in_b = '../data/retangulo_dif_4_b.mtx'
+#  file_in_a = '../data/cilindro1_1_1.mtx'
+#  file_in_b = '../data/cilindro1_1_1_b.mtx'
+#  file_in_a = '../data/sist3.mtx'
+#  file_in_b = '../data/sist3_b.mtx'
 
   aCoo  = io.mmread(file_in_a)
   nla    = int(io.mminfo(file_in_a)[0])
@@ -46,8 +48,10 @@ def main():
 
   # ...
   time = []
-  list_name = ('CG', 'JCG', 'DILUCG', 'ILUCG')
-  for pre, name in zip([0, 1, 2, 3], list_name):
+#  list_name = ('CG', 'JCG', 'DILUCG', 'ILUCG')
+  list_name = ('CG', 'JCG')
+#  for pre, name in zip([0, 1, 2, 3], list_name):
+  for pre, name in zip([0, 1], list_name):
     print(name)
     time1 = tm.time()
     x  = pcgNumpy(a, b, neq, preC = pre, nameLog =  name +'.txt')

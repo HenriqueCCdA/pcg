@@ -8,7 +8,7 @@ def pcgNumpy(a, b, neq: int, x = None, tol: float = 1.e-14
     """
     ***************************************************************************
     * DATA DE CRIACAO  : 28/02/2019                                           *
-    * DATA DE MODIFICAO: 24/09/2020                                           *
+    * DATA DE MODIFICAO: 29/09/2020                                           *
     * ----------------------------------------------------------------------- *
     * pcgNumpy : gradiente conjugado com precondicionador diagonal            *
     * ----------------------------------------------------------------------- *
@@ -25,6 +25,7 @@ def pcgNumpy(a, b, neq: int, x = None, tol: float = 1.e-14
     *         0 - nenhum                                                      *
     *         1 - Jacobi                                                      *
     *         2 - DILU                                                        *
+    *         4 - ILU                                                         *
     * ----------------------------------------------------------------------- *
     * Parametros de saida:                                                    *
     * ----------------------------------------------------------------------- *
@@ -67,16 +68,15 @@ def pcgNumpy(a, b, neq: int, x = None, tol: float = 1.e-14
         x = np.zeros((neq,1),dtype=float)
     # .........................................................................
 
-    # ...
-    d0: int = float(np.dot(b.T,b))
-    d: int = d0
-    norm_b: int = np.sqrt(d)
-    conv: int  = tol*norm_b
+    # ... conv = tol * |(M-1)b|m = tol(b,M(-1)b)/
+    z = pre_cond_solver(m, a, b, neq, preC)
+    d       : float = float(np.dot(b.T,z))
+    norm_b_m: float = np.sqrt(d)
+    conv: int  = tol*norm_b_m
     # .........................................................................
 
-    #...
-    if fHist:
-        fileLog.write("{0:10d},{1:.14e}\n".format(0,np.sqrt(d/d0)))
+    # ... ||b||
+    norm_b: int = np.sqrt(float(np.dot(b.T, b)))
     # .........................................................................
 
     # ...
@@ -90,6 +90,11 @@ def pcgNumpy(a, b, neq: int, x = None, tol: float = 1.e-14
 
     # ... ( r(0),z(0) ) = ( r(0), (M-1)r0 )
     d = float(np.dot(r.T,z))
+    # .........................................................................
+
+    #...
+    if fHist:
+        fileLog.write("{0:10d},{1:.14e}\n".format(0,np.sqrt(d/norm_b_m)))
     # .........................................................................
 
     # ...
@@ -115,7 +120,7 @@ def pcgNumpy(a, b, neq: int, x = None, tol: float = 1.e-14
         # .....................................................................
 
         # ... ( r(j+1),(M-1)r(j+1) ) = ( r(j+1),z )
-        di   = float(np.dot(r.T,z))
+        di   = float(np.dot(r.T, z))
         # ... beta = ( r(j+1),(M-1)r(j+1) ) / ( r(j),r(j) )
         beta = di/d
         # .....................................................................
@@ -128,7 +133,7 @@ def pcgNumpy(a, b, neq: int, x = None, tol: float = 1.e-14
         d = di
         #...
         if fHist:
-            fileLog.write("{0:10d},{1:.14e}\n".format(j,np.sqrt(abs(d)/d0)))
+            fileLog.write("{0:10d},{1:.14e}\n".format(j,np.sqrt(abs(d)/norm_b_m)))
         # .....................................................................
 
         # ...
@@ -147,17 +152,26 @@ def pcgNumpy(a, b, neq: int, x = None, tol: float = 1.e-14
 
     # ... Energy norm: x*Kx
     z   = a@x
-    xkx = float(np.dot(x.T,z))
+    xkx: float = float(np.dot(x.T,z))
+    # .........................................................................
+
+    # ...
+    norm_x: float = np.sqrt(float(np.dot(x.T, x)))
     # .........................................................................
 
     # ...
     pre_name = "CG", "JCG", "DILU(0)CG", "ILU(0)CG"
     stry = f"({pre_name[preC]}) solver:\n"
-    stry+= "Solver tol           = {0:e}\n"
-    stry+= "Number of equations  = {1}\n"
+    stry+= "Solver conv          = {0:e}\n"
+    stry+= "Solver tol           = {1:e}\n"
     stry+= "Number of iterations = {2}\n"
-    stry+= "xKx                  = {3:e}\n"
-    print(stry.format(tol,neq,j,xkx))
+    stry+= "Number of equations  = {3}\n"
+    stry+= "xKx                  = {4:e}\n"
+    stry+= "|| x ||              = {5:e}\n"
+    stry+= "|| b - Ax ||         = {6:e}\n"
+    stry+= "|| b - Ax ||m        = {7:e}\n"
+    stry+= "|| b ||              = {8:e}\n"
+    print(stry.format(conv, tol, j, neq, xkx, norm_x, norm_x, norm_b, norm_b))
     # .........................................................................
 
     # ... fecha o arquivo de log
