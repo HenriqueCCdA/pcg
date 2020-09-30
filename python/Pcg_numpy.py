@@ -159,19 +159,26 @@ def pcgNumpy(a, b, neq: int, x = None, tol: float = 1.e-14
     norm_x: float = np.sqrt(float(np.dot(x.T, x)))
     # .........................................................................
 
+    # ... r =M(-1)(b - Ax)
+    r = b - a@x
+    z = pre_cond_solver(m, a, r, neq, preC)
+    norm_r: float = np.sqrt(float(np.dot(r.T, r)))
+    norm_r_m: float = np.sqrt(float(np.dot(r.T, z)))
+    # .........................................................................
+
     # ...
     pre_name = "CG", "JCG", "DILU(0)CG", "ILU(0)CG"
     stry = f"({pre_name[preC]}) solver:\n"
-    stry+= "Solver conv          = {0:e}\n"
-    stry+= "Solver tol           = {1:e}\n"
-    stry+= "Number of iterations = {2}\n"
-    stry+= "Number of equations  = {3}\n"
+    stry+= "Number of iterations = {0}\n"
+    stry+= "Number of equations  = {1}\n"
+    stry+= "Solver conv          = {2:e}\n"
+    stry+= "Solver tol           = {3:e}\n"
     stry+= "xKx                  = {4:e}\n"
     stry+= "|| x ||              = {5:e}\n"
     stry+= "|| b - Ax ||         = {6:e}\n"
     stry+= "|| b - Ax ||m        = {7:e}\n"
     stry+= "|| b ||              = {8:e}\n"
-    print(stry.format(conv, tol, j, neq, xkx, norm_x, norm_x, norm_b, norm_b))
+    print(stry.format(j, neq, conv, tol, xkx, norm_x, norm_r, norm_r_m, norm_b))
     # .........................................................................
 
     # ... fecha o arquivo de log

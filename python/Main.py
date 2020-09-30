@@ -48,13 +48,12 @@ def main():
 
   # ...
   time = []
-#  list_name = ('CG', 'JCG', 'DILUCG', 'ILUCG')
-  list_name = ('CG', 'JCG')
-#  for pre, name in zip([0, 1, 2, 3], list_name):
-  for pre, name in zip([0, 1], list_name):
+  list_name = ('CG', 'JCG', 'DILUCG', 'ILUCG')
+
+  for pre, name in zip([0, 1, 2, 3], list_name):
     print(name)
     time1 = tm.time()
-    x  = pcgNumpy(a, b, neq, preC = pre, nameLog =  name +'.txt')
+    x  = pcgNumpy(a, b, neq, preC = pre, tol = 1e-11,  nameLog =  name +'.txt')
     time.append(tm.time() - time1)
 # ......................................................................
 
