@@ -27,30 +27,16 @@
 
 
 /*... Saida de Erro*/                                                  
-#define ERRO_RCM fprintf(stderr,"\nrcm - fatal error!\n")
-
-  #define ERRO_OP(line,file,func,op)\
-    fprintf(stderr,"Opecao %d e invalida!!\n",op);\
-    fprintf(stderr,"Arquivo:%s\nFonte:  %s\nLinha:  %d\n"\
-          ,file,func,line);\
-    exit(EXIT_FAILURE);
-  
-  #define ERRO_NORM(line,file,func,lin,col)\
-    fprintf(stderr,"Erro no calulo da norma!!\n");\
-    fprintf(stderr,"Numero de linha  : %d\n"\
-                   "Numero de colunas: %d\n",lin,col);\
-    fprintf(stderr,"Arquivo:%s\nFonte:  %s\nLinha:  %d\n"\
-          ,file,func,line);\
-    exit(EXIT_FAILURE);
- 
-  #define ERRO_GERAL(file,func,str)\
-    fprintf(stderr,"Erro: %s!!\n",str);\
-    fprintf(stderr,"Arquivo:%s\nFonte:  %s\n",file,func);\
-    exit(EXIT_FAILURE);
-
   #define ERRO_MALLOC(point,str,line,file,func)\
      if(point == NULL){\
      fprintf(stderr,"Erro na alocacao do vetor %s\n",str);\
+     fprintf(stderr,"Arquivo:%s\nFonte:  %s\nLinha:  %d\n"\
+            ,file,func,line);\
+     exit(EXIT_FAILURE);}
+
+  #define ERRO_FILE(point,str,line,file,func)\
+     if(point == NULL){\
+     fprintf(stderr,"Erro na abertura do arquivo %s\n",str);\
      fprintf(stderr,"Arquivo:%s\nFonte:  %s\nLinha:  %d\n"\
             ,file,func,line);\
      exit(EXIT_FAILURE);}

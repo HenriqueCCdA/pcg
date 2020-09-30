@@ -74,14 +74,16 @@ void matVecFull( double *a
                , short const code)
 {
   int i,j;
+  double tmp;
 
 /*... */  
   if(code){
     for(i=0;i<nLin;i++){
-      y[i] =0.0;
+      tmp = 0.0;
       for(j=0;j<nCol;j++){
-        y[i] += MAT2D(i,j,a,nCol)*x[j];
+        tmp += MAT2D(i,j,a,nCol)*x[j];
       }
+      y[i] = tmp;
     }
   }
 /*...................................................................*/
@@ -90,10 +92,11 @@ void matVecFull( double *a
   else{
     
     for(i=0;i<nLin;i++){
-      y[i] =0.0;
+      tmp = 0.0;
       for(j=0;j<nCol;j++){
-        y[i] += MAT2D(j,i,a,nLin)*x[j];
+        tmp += MAT2D(j,i,a,nLin)*x[j];
       }
+      y[i] = tmp;
     }
 
   }

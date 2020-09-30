@@ -55,11 +55,11 @@ void pcg(int const nEq      , double *a
   r = (double *) malloc(sizeof(double)*nEq);
   ERRO_MALLOC(r, "r",__LINE__, __FILE__, __func__);
   p = (double *) malloc(sizeof(double)*nEq);
-  ERRO_MALLOC(r, "p",__LINE__, __FILE__, __func__);
-  m = (double *) malloc(sizeof(double)*nEq);
-  ERRO_MALLOC(r, "m",__LINE__, __FILE__, __func__);
-  for (i = 0; i < nEq; i++)
-    m[i] = 1.0/a[i*nEq + i];
+  ERRO_MALLOC(p, "p",__LINE__, __FILE__, __func__);
+/*...................................................................*/
+
+/*... gerando o precondicionador*/
+  m = preMake( a, nEq, preC);
 /*...................................................................*/
 
 /*... chute inicial*/
@@ -78,7 +78,7 @@ void pcg(int const nEq      , double *a
 /*...................................................................*/
   
 /*... ||b||*/
-  normB = sqrt(dot(b, b,nEq));
+  normB = sqrt(dot(b, b, nEq));
 /*...................................................................*/
  
 /*... Ax0*/
@@ -90,9 +90,8 @@ void pcg(int const nEq      , double *a
   }
 
 /* ... z0 = (M-1)r0*/
-  for(i = 0; i < nEq; i++)   {
-    z[i] = r[i] * m[i];
-  }
+  preCondSolver(m, a, r, z, nEq, preC);
+
 
 /*...p0 = r0*/
  for(i = 0; i < nEq; i++)   {
@@ -125,9 +124,7 @@ void pcg(int const nEq      , double *a
 /*...................................................................*/
 
 /*... z  = (M-1)r0 */
-    for(i = 0; i < nEq; i++)   {
-      z[i] = r[i] * m[i];
-    }
+    preCondSolver(m, a, r, z, nEq, preC);
 /*...................................................................*/
 
 /* ... (r(j + 1), (M - 1)r(j + 1)) = (r(j + 1), z)*/
@@ -176,16 +173,16 @@ void pcg(int const nEq      , double *a
   for(i = 0; i < nEq; i++)
     r[i]  = b[i] - z[i];
 
-  for(i = 0; i < nEq; i++)
-    z[i] = r[i] * m[i];
+  preCondSolver(m, a, r, z, nEq, preC);
 /*...................................................................*/
   normRm = dot( r, z, nEq);
   normRm = sqrt(fabs(normRm));
   normR  = sqrt(dot( r, r, nEq));
-/*.........................................................*/
+/*...................................................................*/
 
   timef = getTimeC() - timei;   
-  
+
+/*...*/
   printf(" (CG) solver:\n"
          "\tIterarions    =      %20d\n"
          "\tEquations     =      %20d\n"
@@ -196,7 +193,7 @@ void pcg(int const nEq      , double *a
          "\t|| b - Ax ||  =      %20.6e\n"
          "\t|| b - Ax ||m =      %20.6e\n"
          "\t||b||         =      %20.6e\n"
-	       "\tCPU time(s)  =      %20.5lf\n" 
+	       "\tCPU time(s)   =      %20.5lf\n" 
 	       , j + 1, nEq,conv, tol, xKx, normX, normR, normRm, normB, timef);
   
   if(j == maxIt)
@@ -205,5 +202,13 @@ void pcg(int const nEq      , double *a
     printf("MAXIT = %d \n",maxIt);
     exit(EXIT_FAILURE);
   }
+/*...................................................................*/
+
+/*... liberando memoria*/
+  free(z);
+  free(m);
+  free(r);
+  free(p);
+/*....................................................................*/
 }
 /**********************************************************************/
