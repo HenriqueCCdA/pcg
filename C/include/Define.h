@@ -5,8 +5,11 @@
   #include<stdio.h>
 /*...................................................................*/
 
-/*... solver*/
-  #define PCG        1
+/*...*/
+  #define NONE        0
+  #define DIAGONAL    1
+  #define DILU        2
+  #define ILU         3  
 /*...................................................................*/
 
 /*... macro para acesso matricial em vetores*/

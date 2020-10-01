@@ -29,7 +29,7 @@ double* preMake(double *a, int const nEq, char preC)
   double *m = NULL;
 
 /*... nenhum*/
-  if(preC == 0){
+  if(preC == NONE){
     m = (double *) malloc(sizeof(double)*nEq);
     ERRO_MALLOC(m, "m",__LINE__, __FILE__, __func__);
     for(i = 0; i < nEq; i++)
@@ -37,7 +37,7 @@ double* preMake(double *a, int const nEq, char preC)
   }
 
 /*... diagonal*/
-  if(preC == 1){
+  if(preC == DIAGONAL){
     m = (double *) malloc(sizeof(double)*nEq);
     ERRO_MALLOC(m, "m",__LINE__, __FILE__, __func__);
     for(i = 0; i < nEq; i++)
@@ -83,13 +83,13 @@ void preCondSolver(double *m     , double *a
   int i;
 
 /*... nenhum*/
-  if(preC == 0){
+  if(preC == NONE){
     for(i = 0; i < nEq; i++)
       x[i] = r[i];
   }
 
 /*... diagonal*/
-  if(preC == 1){
+  if(preC == DIAGONAL){
     for(i = 0; i < nEq; i++)
       x[i] = r[i]*m[i];
   }

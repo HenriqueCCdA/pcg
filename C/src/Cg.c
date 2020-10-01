@@ -1,4 +1,4 @@
-#include"../include/Solv.h"
+#include"../include/Cg.h"
 #include"../include/HccaTime.h"
 
 /**********************************************************************

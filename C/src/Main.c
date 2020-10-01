@@ -3,10 +3,11 @@
 #include<string.h>
 
 #include"../include/Define.h"
-#include"../include/Solv.h"
+#include"../include/Cg.h"
 #include"../include/HccaBlas.h"
 #include"../include/ReadFile.h"
 #include"../include/HccaStdBool.h"
+
 int main(int argc, char *argv[]) {
 
   int i;
