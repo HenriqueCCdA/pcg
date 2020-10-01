@@ -35,8 +35,8 @@
 void pcg(int const nEq      , double *a 
         , double *b          , double *x 
         , double const tol   , char preC
-        , unsigned int maxIt , char newX          
-        , FILE* fLog         , char log
+        , unsigned int maxIt , bool newX          
+        , FILE* fLog         , bool log
         , void(*matvec)()    , double(*dot)())
 {
   int i,j;

@@ -13,6 +13,8 @@
 /*...*/
   #include"Define.h"
   #include"PreCond.h"
+  #include"HccaStdBool.h"
+
 /*...................................................................*/
  
 /*========================= Iterativos ==============================*/
@@ -20,8 +22,8 @@
   void pcg(int const neq      , double *a
           , double *b          , double *x 
           , double const tol   , char preC
-          , unsigned int maxit , char newX          
-          , FILE* fileSolvLog  , char log
+          , unsigned int maxit , bool newX          
+          , FILE* fileSolvLog  , bool log
           , void(*matvec)()    , double(*dot)());
 /*...................................................................*/
 

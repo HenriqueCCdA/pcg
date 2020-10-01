@@ -6,7 +6,7 @@
 #include"../include/Solv.h"
 #include"../include/HccaBlas.h"
 #include"../include/ReadFile.h"
-
+#include"../include/HccaStdBool.h"
 int main(int argc, char *argv[]) {
 
   int i;
@@ -39,8 +39,8 @@ int main(int argc, char *argv[]) {
     pcg(nEq        , a
       , b          , x 
       , 1.e-11     , i
-      , 10000      , 1
-      , fLog       , 1
+      , 10000      , true
+      , fLog       , true
       , matVec     , inner);
 /*...................................................................*/
     fclose(fLog);
