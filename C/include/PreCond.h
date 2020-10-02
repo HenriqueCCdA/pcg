@@ -3,14 +3,15 @@
 
   #include"Define.h"
 
-  double* preMake(double *a, int const nEq, char preC);
+  double* preMake(double *RESTRICT a, int const nEq, char preC);
 
-  void preCondSolver(double *m     , double *a
-                   , double *r    , double *x
-                   , int const nEq, char preC);
+  void preCondSolver(double *RESTRICT m    , double *RESTRICT a
+                   , double *RESTRICT r    , double *RESTRICT x
+                   , int const nEq         , char preC);
 
 
-  void dilu(double *m    , double *a, int const nEq);
-  void fb_dilu(double *r, double *a, double *d, double *x, int const nEq);
+  void dilu(double *RESTRICT m, double *RESTRICT a, int const nEq);
+  void fb_dilu(double *RESTRICT r, double *RESTRICT a
+             , double *RESTRICT d, double *RESTRICT x, int const nEq);
 
 #endif

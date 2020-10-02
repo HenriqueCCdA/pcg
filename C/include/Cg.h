@@ -19,8 +19,8 @@
  
 /*========================= Iterativos ==============================*/
 /*... gradiente conjugado precondicionado*/
-  void pcg(int const neq      , double *a
-          , double *b          , double *x 
+  void pcg(int const neq       , double *RESTRICT a
+          , double *RESTRICT b , double *RESTRICT x 
           , double const tol   , char preC
           , unsigned int maxit , bool newX          
           , FILE* fileSolvLog  , bool log

@@ -11,14 +11,14 @@
 /*...................................................................*/
 
 /*... level 1*/
-  double dot(double *x1,double *x2,int const n);
+  double dot(double *RESTRICT x1,double *RESTRICT x2,int const n);
 /*...................................................................*/
 
 /*level 2*/
 /* ... matriz cheia*/
-  void matVecFull( double *a
-                 , double *x
-                 , double *y
+  void matVecFull( double *RESTRICT a
+                 , double *RESTRICT x
+                 , double *RESTRICT y
                  , int const nLin , int const nCol
                  , short const code);
 /*...................................................................*/

@@ -6,6 +6,18 @@
 /*...................................................................*/
 
 /*...*/
+  #ifdef _MSC_VER
+/*  #define LONG_INT __int64*/
+    typedef __int64 LONG_INT;
+    #define RESTRICT __restrict
+  #else
+    #define LONG_INT long  
+/*  typedef __int64 LONG_INT;*/
+    #define RESTRICT restrict
+  #endif
+/*...................................................................*/
+
+/*...*/
   #define NONE        0
   #define DIAGONAL    1
   #define DILU        2

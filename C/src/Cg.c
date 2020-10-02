@@ -32,8 +32,8 @@
  * ad,al,au-> inalterado                                              *
  * -------------------------------------------------------------------*
  *********************************************************************/
-void pcg(int const nEq      , double *a 
-        , double *b          , double *x 
+void pcg(int const nEq       , double *RESTRICT a 
+        , double *RESTRICT b , double *RESTRICT x 
         , double const tol   , char preC
         , unsigned int maxIt , bool newX          
         , FILE* fLog         , bool log
