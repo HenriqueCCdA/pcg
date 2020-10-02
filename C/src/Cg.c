@@ -39,7 +39,7 @@ void pcg(int const nEq       , double *RESTRICT a
         , FILE* fLog         , bool log
         , void(*matvec)()    , double(*dot)())
 {
-  char *name[] = {"CG", "JCG", "DILU"};
+  char *name[] = {"CG", "JCG", "DILU", "ILU"};
   int i,j;
   int k=0;
   char transp = 1;

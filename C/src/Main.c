@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
 
   int i;
   int preC[] = {0, 1, 2};
-  char *name[] = {"CG", "JCG", "DILU"};
+  char *name[] = {"CG", "JCG", "DILU", "ILU"};
   char nameFile[100];
   int nEq;
   double *a, *b, *x;
@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
 /*...................................................................*/
 
 /*...*/
-  for(i = 0; i < 3; i++)
+  for(i = 0; i < 4; i++)
   {
 /*... abertura do arquivo de log*/
     strcpy(nameFile, name[i]); 

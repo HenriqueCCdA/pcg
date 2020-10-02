@@ -14,4 +14,8 @@
   void fb_dilu(double *RESTRICT r, double *RESTRICT a
              , double *RESTRICT d, double *RESTRICT x, int const nEq);
 
+  void ilu(double *RESTRICT m, double *RESTRICT a, int const nEq);
+  void fb_ilu(double *RESTRICT r, double *RESTRICT m
+            , double *RESTRICT x, int const nEq);
+
 #endif
