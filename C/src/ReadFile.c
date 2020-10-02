@@ -96,15 +96,17 @@ void readSystem(double *a[], double *b[], double *x[], int *nEq) {
   double *aCoo;
 
   /*... open file matrix A*/
-//fileInA = fopen("sist3.mtx","r");
-  fileInA = fopen("retangulo_dif_4.mtx","r");
+  fileInA = fopen("retangulo_mec.mtx","r");
+//fileInA = fopen("cilindro1_1_1.mtx","r");
+//fileInA = fopen("retangulo_dif_4.mtx","r");
   if(fileInA == NULL){ 
     printf("Erro na abertura da arquivo %s.\n","teste");
     exit(EXIT_FAILURE);
   }
-  
-//fileInB = fopen("sist3_b.mtx","r");
-  fileInB = fopen("retangulo_dif_4_b.mtx","r");
+ 
+  fileInB = fopen("retangulo_mec_b.mtx","r");
+//fileInB = fopen("cilindro1_1_1_b.mtx","r");
+//fileInB = fopen("retangulo_dif_4_b.mtx","r");
   if(fileInB == NULL){ 
     printf("Erro na abertura da arquivo %s.\n","teste");
     exit(EXIT_FAILURE);

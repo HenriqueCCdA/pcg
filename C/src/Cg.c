@@ -39,6 +39,7 @@ void pcg(int const nEq      , double *a
         , FILE* fLog         , bool log
         , void(*matvec)()    , double(*dot)())
 {
+  char *name[] = {"CG", "JCG", "DILU"};
   int i,j;
   int k=0;
   char transp = 1;
@@ -69,8 +70,7 @@ void pcg(int const nEq      , double *a
 /*...................................................................*/
 
 /*... conv = tol * |(M-1)b|m = tol(b,M(-1)b) */
-	for (i = 0; i < nEq; i++)
-    z[i] = b[i] * m[i];
+  preCondSolver(m, a, b, z, nEq, preC);
 
   d      = dot(b, z, nEq);
 	normBm = sqrt(fabs(d));
@@ -183,7 +183,7 @@ void pcg(int const nEq      , double *a
   timef = getTimeC() - timei;   
 
 /*...*/
-  printf(" (CG) solver:\n"
+  printf(" (%s) solver:\n"
          "\tIterarions    =      %20d\n"
          "\tEquations     =      %20d\n"
          "\tSolver conv   =      %20.6e\n"
@@ -194,7 +194,9 @@ void pcg(int const nEq      , double *a
          "\t|| b - Ax ||m =      %20.6e\n"
          "\t||b||         =      %20.6e\n"
 	       "\tCPU time(s)   =      %20.5lf\n" 
-	       , j + 1, nEq,conv, tol, xKx, normX, normR, normRm, normB, timef);
+         , name[preC]
+	       , j + 1, nEq  ,conv   , tol  , xKx
+         , normX, normR, normRm, normB, timef);
   
   if(j == maxIt)
   { 
