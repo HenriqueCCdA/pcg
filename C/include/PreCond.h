@@ -2,6 +2,7 @@
   #include<stdlib.h>
 
   #include"Define.h"
+  #include"Error.h"
 
   double* preMake(double *RESTRICT a, int const nEq, char preC);
 

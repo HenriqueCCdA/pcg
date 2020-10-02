@@ -7,6 +7,7 @@
 #include"../include/HccaBlas.h"
 #include"../include/ReadFile.h"
 #include"../include/HccaStdBool.h"
+#include"../include/Error.h"
 
 int main(int argc, char *argv[]) {
 

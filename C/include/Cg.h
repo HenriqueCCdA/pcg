@@ -14,7 +14,7 @@
   #include"Define.h"
   #include"PreCond.h"
   #include"HccaStdBool.h"
-
+  #include"Error.h"
 /*...................................................................*/
  
 /*========================= Iterativos ==============================*/
